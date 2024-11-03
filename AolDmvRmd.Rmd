@@ -1,0 +1,2225 @@
+---
+title: "R Notebook"
+output:
+  word_document: default
+  html_notebook: default
+  pdf_document: default
+---
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code.
+
+Read data
+
+```{r}
+data = read.table(file.choose(), sep=";", header=T)
+```
+
+Display head data
+
+```{r}
+head(data)
+```
+
+Display data tail
+
+```{r}
+tail(data)
+```
+
+Check all the attributes
+
+```{r}
+names(data)
+```
+
+Check the structure of the data
+
+```{r}
+str(data)
+```
+
+See the dimension of dataset
+
+```{r}
+dim(data)
+```
+
+Check the missing values
+
+```{r}
+colSums(is.na(data))
+```
+
+Check the summary statistics
+
+```{r}
+summary(data)
+```
+
+Observe the unique value of categorical attributes
+
+```{r}
+table(data$Continent)
+```
+
+```{r}
+table(data$Year)
+```
+
+# Data Visualization
+
+```{r}
+library(ggplot2)
+```
+
+## Univariate graph
+
+```{r}
+ggplot(data, aes(y = Military.expenditure)) + geom_boxplot(color="darkblue", fill="cornflowerblue", outlier.size = 0.1) + 
+  labs(title = "The distribution of Military.expenditure", y = "Military.expenditure")
+
+```
+
+analysis\~
+
+```{r}
+ggplot(data, aes(y = Population)) + geom_boxplot(color="darkblue", fill="cornflowerblue", outlier.size = 0.1) + 
+  labs(title = "The distribution of Population", y = "Population")
+```
+
+analysis\~
+
+```{r}
+ggplot(data, aes(y = CO2.emissions)) + geom_boxplot(color="darkblue", fill="cornflowerblue", outlier.size = 0.1) + 
+  labs(title = "The distribution of CO2.emissions", y = "CO2.emissions")
+```
+
+analysis\~
+
+```{r}
+ggplot(data, aes(y = Health.expenditure)) + geom_boxplot(color="darkblue", fill="cornflowerblue", outlier.size = 0.1) + 
+  labs(title = "The distribution of Health.expenditure", y = "Health.expenditure")
+```
+
+analysis\~
+
+```{r}
+ggplot(data, aes(y = People.practicing.open.defecation )) + geom_boxplot(color="darkblue", fill="cornflowerblue", outlier.size = 0.1) + 
+  labs(title = "The distribution of People.practicing.open.defecation ", y = "People.practicing.open.defecation")
+```
+
+analysis\~
+
+```{r}
+ggplot(data, aes(y = GDP.per.capita)) + geom_boxplot(color="darkblue", fill="cornflowerblue", outlier.size = 0.1) + 
+  labs(title = "The distribution of GDP.per.capita  ", y = "GDP.per.capita")
+```
+
+analysis\~
+
+## Bivariate graph of numerical variables
+
+```{r}
+library(ggplot2)
+library(dplyr) 
+library(tidyverse)
+```
+
+### Plot the relation of Population and lifeExpectancy
+
+```{r}
+cor.test(data$Population, data$Life.Expectancy)
+```
+
+```{r}
+ggplot(data, aes(x=Population, y=Life.Expectancy)) + geom_point(color="cornflowerblue", size=0.1) + labs(x="Population", y="Life Expectancy", title="Population and Life Expectancy") + geom_smooth(col="yellow") + theme_bw()
+```
+
+Scatter plot di atas menunjukkan relasi antara dua variabel, Population dan Life.Expectancy. Berdasarkan visualisasi di atas, korelasi antara Population dan Life.Expectancy tergolong tidak memiliki hubungan. Dengan koefisien -0.037, korelasi antara kedua variabel tidak dapat disimpulkan dan dapat diabaikan.
+
+### Plot the relation of CO2 emissions and lifeExpectancy
+
+```{r}
+cor.test(data$CO2.emissions, data$Life.Expectancy)
+```
+
+```{r}
+ggplot(data, aes(x=CO2.emissions, y=Life.Expectancy)) + geom_point(color="cornflowerblue", size=0.1) + labs(x="CO2 emissions", y="Life Expectancy", title="CO2 emissions and Life Expectancy") + geom_smooth(col="yellow") + theme_bw()
+```
+
+Scatter plot di atas menunjukkan relasi antara dua variabel, yaitu CO2.emissions dan LifeExpectancy. Berdasarkan visualisasi di atas, dapat dilihat bahwa CO2.emissions yang tinggi cenderung membuat Life.Expectancy semakin tinggi juga. Dengan koefisien 0.46, terdapat korelasi yang cukup atau sedang serta positif antara kedua variabel.
+
+### Plot the relation of Health expenditure and lifeExpectancy
+
+```{r}
+cor.test(data$Life.Expectancy, data$Health.expenditure)
+```
+
+```{r}
+ggplot(data, aes(x=Health.expenditure, y=Life.Expectancy)) + geom_point(color="cornflowerblue", size=0.1) + labs(x="Health.expenditure", y="Life Expectancy", title="Health.expenditure and Life Expectancy") + geom_smooth(col="yellow") + theme_bw()
+```
+
+Scatter plot di atas menunjukkan relasi antara dua variabel, yaitu health.expenditure dan Life.Expectancy. Berdasarkan visualisasi di atas, dapat dilihat bahwa Health.expenditure yang tinggi cenderung membuat Life.Expectancy semakin tinggi juga. Dengan koefisien 0.47, terdapat korelasi yang cukup atau sedang serta positif antara kedua variabel.
+
+### Plot the relation of Electric power consumption and lifeExpectancy
+
+```{r}
+cor.test(data$Electric.power.consumption, data$Life.Expectancy)
+```
+
+```{r}
+ggplot(data, aes(x=Electric.power.consumption, y=Life.Expectancy)) + geom_point(color="cornflowerblue", size=0.1) + labs(x="Electric.power.consumption", y="Life Expectancy", title="Electric.power.consumption and Life Expectancy") + geom_smooth(col="yellow") + theme_bw()
+```
+
+Scatter plot di atas menunjukkan relasi antara dua variabel, yaitu Electric.power.consumption dan Life.Expectancy. Berdasarkan visualisasi di atas, dapat dilihat bahwa Electric.power.consumption yang tinggi cenderung membuat Life.Expectancy semakin tinggi juga. Dengan koefisien 0.47, terdapat korelasi yang cukup atau sedang serta positif antara kedua variabel.
+
+### Plot the relation of Forest area and lifeExpectancy
+
+```{r}
+cor.test(data$Forest.area, data$Life.Expectancy)
+```
+
+```{r}
+ggplot(data, aes(x=Forest.area, y=Life.Expectancy)) + geom_point(color="cornflowerblue", size=0.1) + labs(x="Forest.area", y="Life Expectancy", title="Forest.area and Life Expectancy") + geom_smooth(col="yellow") + theme_bw()
+```
+
+Scatter plot di atas menunjukkan relasi antara dua variabel, Forest.area dan Life.Expectancy. Berdasarkan visualisasi di atas, korelasi antara Forest.area dan Life.Expectancy tergolong tidak memiliki hubungan. Dengan koefisien -0.05, korelasi antara kedua variabel tidak dapat disimpulkan dan dapat diabaikan.
+
+### Plot the relation of GDP per capita and lifeExpectancy
+
+```{r}
+cor.test(data$GDP.per.capita, data$Life.Expectancy)
+```
+
+```{r}
+ggplot(data, aes(x=GDP.per.capita, y=Life.Expectancy)) + geom_point(color="cornflowerblue", size=0.1) + labs(x="GDP.per.capita", y="Life Expectancy", title="GDP.per.capita and Life Expectancy") + geom_smooth(col="yellow") + theme_bw()
+```
+
+Scatter plot di atas menunjukkan relasi antara dua variabel, yaitu GDP.per.capita dan Life.Expectancy. Berdasarkan visualisasi di atas, dapat dilihat bahwa GDP.per.capita yang tinggi cenderung membuat Life.Expectancy semakin tinggi juga. Dengan koefisien 0.57, terdapat korelasi yang cukup atau sedang serta positif antara kedua variabel.
+
+### Plot the relation of Individuals using the Internet and lifeExpectancy
+
+```{r}
+cor.test(data$Individuals.using.the.Internet, data$Life.Expectancy)
+```
+
+```{r}
+ggplot(data, aes(x=Individuals.using.the.Internet, y=Life.Expectancy)) + geom_point(color="cornflowerblue", size=0.1) + labs(x="Individuals.using.the.Internet", y="Life Expectancy", title="Individuals.using.the.Internet and Life Expectancy") + geom_smooth(col="yellow") + theme_bw()
+```
+
+Scatter plot di atas menunjukkan relasi antara dua variabel, yaitu Individuals.using.the.Internet dan Life.Expectancy. Berdasarkan visualisasi di atas, dapat dilihat bahwa Individuals.using.the.Internet yang tinggi cenderung membuat Life.Expectancy semakin tinggi juga. Dengan koefisien 0.698, terdapat korelasi yang cukup kuat, positif, dan linear antara kedua variabel.
+
+### Plot the relation of Military expenditure and lifeExpectancy
+
+```{r}
+cor.test(data$Military.expenditure, data$Life.Expectancy)
+```
+
+```{r}
+ggplot(data, aes(x=Military.expenditure, y=Life.Expectancy)) + geom_point(color="cornflowerblue", size=0.1) + labs(x="Military.expenditure", y="Life Expectancy", title="Military.expenditure and Life Expectancy") + geom_smooth(col="yellow") + theme_bw()
+```
+
+Scatter plot di atas menunjukkan relasi antara dua variabel, Military.expenditure dan Life.Expectancy. Berdasarkan visualisasi di atas, korelasi antara Military.expenditure dan Life.Expectancy tergolong tidak memiliki hubungan. Dengan koefisien -0.09, korelasi antara kedua variabel tidak dapat disimpulkan dan dapat diabaikan.
+
+### Plot the relation of People practicing open defecation and lifeExpectancy
+
+```{r}
+cor.test(data$People.practicing.open.defecation, data$Life.Expectancy)
+```
+
+```{r}
+ggplot(data, aes(x=People.practicing.open.defecation, y=Life.Expectancy)) + geom_point(color="cornflowerblue", size=0.1) + labs(x="People.practicing.open.defecation", y="Life Expectancy", title="People.practicing.open.defecation and Life Expectancy") + geom_smooth(col="yellow") + theme_bw()
+```
+
+Scatter plot di atas menunjukkan relasi antara dua variabel, yaitu People.practicing.open.defecation dan Life.Expectancy. Berdasarkan visualisasi di atas, dapat dilihat bahwa arah kedua variabel saling berlawanan. People.practicing.open.defecation yang semakin rendah cenderung membuat Life.Expectancy semakin tinggi. Dengan koefisien -0.67, terdapat korelasi negatif yang cukup kuat antara kedua variabel.
+
+### Plot the relation of People using at least basic drinking water services and lifeExpectancy
+
+```{r}
+cor.test(data$People.using.at.least.basic.drinking.water.services, data$Life.Expectancy)
+```
+
+```{r}
+ggplot(data, aes(x=People.using.at.least.basic.drinking.water.services, y=Life.Expectancy)) + geom_point(color="cornflowerblue", size=0.1) + labs(x="People.using.at.least.basic.drinking.water.services", y="Life Expectancy", title="People.using.at.least.basic.drinking.water.services and Life Expectancy") + geom_smooth(col="yellow") + theme_bw()
+```
+
+Scatter plot di atas menunjukkan relasi antara dua variabel, yaitu People.using.at.least.basic.drinking.water.services dan Life.Expectancy. Berdasarkan visualisasi di atas, dapat dilihat bahwa People.using.at.least.basic.drinking.water.services yang semakin tinggi cenderung membuat Life.Expectancy semakin tinggi juga. Dengan koefisien 0.83, terdapat korelasi positif yang cukup kuat antara kedua variabel.
+
+### Plot the relation of Obesity among adults and lifeExpectancy
+
+```{r}
+cor.test(data$Obesity.among.adults, data$Life.Expectancy)
+```
+
+```{r}
+ggplot(data, aes(x=Obesity.among.adults, y=Life.Expectancy)) + geom_point(color="cornflowerblue", size=0.1) + labs(x="Obesity.among.adults", y="Life Expectancy", title="Obesity.among.adults and Life Expectancy") + geom_smooth(col="yellow") + theme_bw()
+```
+
+Scatter plot di atas menunjukkan relasi antara dua variabel, yaitu Obesity.among.adults dan Life.Expectancy. Berdasarkan visualisasi di atas, dapat dilihat bahwa Obesity.among.adults yang semakin tinggi cenderung membuat Life.Expectancy semakin tinggi juga. Dengan koefisien 0.69, terdapat korelasi positif yang cukup kuat antara kedua variabel.
+
+### Plot the relation of Beer consumption per capita and lifeExpectancy
+
+```{r}
+cor.test(data$Beer.consumption.per.capita, data$Life.Expectancy)
+```
+
+```{r}
+ggplot(data, aes(x=Beer.consumption.per.capita, y=Life.Expectancy)) + geom_point(color="cornflowerblue", size=0.1) + labs(x="Beer.consumption.per.capita", y="Life Expectancy", title="Beer.consumption.per.capita and Life Expectancy") + geom_smooth(col="yellow") + theme_bw()
+```
+
+Scatter plot di atas menunjukkan relasi antara dua variabel, yaitu Beer.consumption.per.capita dan Life.Expectancy. Berdasarkan visualisasi di atas, dapat dilihat bahwa Beer.consumption.per.capita yang tinggi cenderung membuat Life.Expectancy semakin tinggi juga. Dengan koefisien 0.42, terdapat korelasi yang cukup atau sedang serta positif antara kedua variabel.
+
+## Bivariate graph of numerical and categorical variables
+
+### Continent and Life Expectancy
+
+```{r}
+summaryContinent = data%>%
+  # Specify group indicator, column, function
+  group_by(Continent) %>%
+  summarise_at(vars(Life.Expectancy), list(mean))
+summary(summaryContinent)
+```
+
+#### Plot the graph
+
+```{r}
+ggplot(summaryContinent, aes(x = Continent,
+                             y = Life.Expectancy)) +
+  geom_col(color="cornflowerblue", fill="cornflowerblue") +
+  labs(x = "Continent",
+       y = "Life Expectancy",
+       title = "Life Expectancy in Six Continents")
+```
+
+Berdasarkan grafik di atas, dapat dilihat bahwa benua dengan life Expectancy tertinggi adalah Oceania (di atas 80 tahun). Kemudian diikuti dengan Eropa, Amerika Utara, Amerika Selatan, dan Asia (70-80 tahun). Sedangkan benua dengan life expectancy terendah adalah Africa, dibawah 60 tahun.
+
+### Country and Life Expectancy
+
+```{r}
+summaryCountry = data%>%
+  # Specify group indicator, column, function
+  group_by(Country) %>%
+  summarise_at(vars(Life.Expectancy), list(mean))
+summary(summaryCountry)
+```
+
+#### Take 6 random countries
+
+```{r}
+rows = c(1,22,43,64,85,106,126)
+randomCountry=summaryCountry[rows,]
+randomCountry
+```
+
+#### Plot the graph
+
+```{r}
+ggplot(summaryCountry, aes(x = Country,
+                           y = Life.Expectancy)) +
+  geom_col(color="cornflowerblue", fill="cornflowerblue") +
+  labs(x = "Country",
+       y = "Life Expectancy",
+       title = "Life Expectancy in Some Countries")
+```
+
+Grafik di atas menunjukkan life expectancy di beberapa negara secara acak, antara lain Albania, China, Estonia, Kazakhstan, New Zealand, Slovenia, dan Zimbabwe. Di antara data tersebut, New zealand memiliki life expectancy tertinggi dengan rata-rata 80.2 tahun. Sedangkan Zimbabwe memiliki life expectancy terendah dengan rata-rata 48.7 tahun.
+
+### Year and Life Expectancy
+
+```{r}
+summaryYear = data%>%
+  # Specify group indicator, column, function
+  group_by(Year) %>%                        
+  summarise_at(vars(Life.Expectancy), list(mean))
+summary(summaryYear)
+```
+
+#### Plot the graph
+
+```{r}
+ggplot(summaryYear, aes(x = Year,
+                           y = Life.Expectancy)) +
+  geom_col(color="cornflowerblue", fill="cornflowerblue") +
+  labs(x = "Year",
+       y = "Life Expectancy",
+       title = "Life Expectancy from 2000 - 2015")
+```
+
+Pada grafik di atas, dapat dilihat bahwa life expectancy terus naik dari tahun ke tahun. Pada tahun 2000, rata-rata life expectancy adalah 68.60. Kemudian pada tahun 2015, rata-rata life expectancy menjadi 73.31.
+
+## Multivariate graph of numerical variables
+
+### Plot the relation of Electric.power.consumption, Life.Expectancy, and Individuals.using.the.Internet
+
+```{r}
+ggplot(data, aes(x=Electric.power.consumption, y=Life.Expectancy, color=Individuals.using.the.Internet)) + geom_point(size=0.5) + labs(x="Electric.power.consumption", y="Life.Expectancy", title="Electric.power.consumption vs Life.Expectancy vs Individuals.using.the.Internet") + geom_smooth(col="yellow", size=0.3) + theme_bw()
+```
+
+Grafik yang menunjukkan hubungan antara Electric power consumption dan Individuals using the Internet dengan life expectancy di atas menunjukkan bahwa life expectancy menjadi lebih tinggi dengan penggunaan listrik yang lebih banyak serta individu pengguna internet yang lebih banyak juga.
+
+## Multivariate graph of numerical and categorical variables
+
+### Plot the relation of Continent, Life Expenctancy, and Year
+
+```{r}
+ggplot(data, aes(Year, Life.Expectancy)) + geom_point(size = 0.1, color="cornflowerblue") + labs(x="Year", y="Life.Expectancy", title="Yearly Analysis of Life expectancy based on the continents") + facet_wrap(~Continent) + theme_bw() + theme(axis.text.x = element_text(size=8, angle=90))
+```
+
+Pada grafik tersebut, dapat dilihat bahwa life expectancy di semua benua semakin tinggi setiap tahunnya. \# Model Regresi
+
+```{r}
+library(lmtest)
+```
+
+```{r}
+m1 = lm(Life.Expectancy~People.practicing.open.defecation, data)
+m2 = lm(Life.Expectancy~Individuals.using.the.Internet, data)
+m3 = lm(Life.Expectancy~Obesity.among.adults, data)
+m4 = lm(Life.Expectancy~People.using.at.least.basic.drinking.water.services, data)
+m5 = lm(Life.Expectancy~People.practicing.open.defecation+Individuals.using.the.Internet, data)
+m6 = lm(Life.Expectancy~People.practicing.open.defecation+Obesity.among.adults, data)
+m7 = lm(Life.Expectancy~People.practicing.open.defecation+People.using.at.least.basic.drinking.water.services, data)
+m8 = lm(Life.Expectancy~Individuals.using.the.Internet+Obesity.among.adults, data)
+m9 = lm(Life.Expectancy~Individuals.using.the.Internet+People.using.at.least.basic.drinking.water.services, data)
+m10 = lm(Life.Expectancy~Obesity.among.adults+People.using.at.least.basic.drinking.water.services, data)
+m11 = lm(Life.Expectancy~People.practicing.open.defecation+Individuals.using.the.Internet+Obesity.among.adults, data)
+m12 = lm(Life.Expectancy~People.practicing.open.defecation+Individuals.using.the.Internet+People.using.at.least.basic.drinking.water.services, data)
+m13 = lm(Life.Expectancy~People.practicing.open.defecation+Obesity.among.adults+People.using.at.least.basic.drinking.water.services, data)
+m14 = lm(Life.Expectancy~Individuals.using.the.Internet+Obesity.among.adults+People.using.at.least.basic.drinking.water.services, data)
+m15 = lm(Life.Expectancy~People.practicing.open.defecation+Individuals.using.the.Internet+Obesity.among.adults+People.using.at.least.basic.drinking.water.services, data)
+```
+
+## Model 1: Life.Expectancy\~People.practicing.open.defecation
+
+```{r}
+model = m1
+summary(model)
+```
+
+### 1. Semua parameter signifikan
+
+#### uji serentak (f test)
+
+H0: semua parameter tidak berpengaruh terhadap model
+
+H1: minimal ada satu parameter yang berpengaruh terhadap model
+
+Karena p-value \< alpha(0.05)
+
+Maka, H0 ditolak
+
+Jadi, minimal ada satu parameter yang berpengaruh terhadap model.
+
+Untuk mencari parameter mana yang berpengaruh / signifikan terhadap model, kita perlu mengujinya dengan uji parsial.
+
+#### uji parsial (t test)
+
+H0: parameter tersebut tidak berpengaruh terhadap model
+
+H1: parameter tersebut berpengaruh terhadap model
+
+#####Cari tau pengaruh intercept pada uji parsial
+
+Tolak Ho jika p-value \< alpha(0.05)
+
+karena 2e-16 \< 0.05
+
+Maka, Ho ditolak
+
+Jadi intercept berpengaruh dalam model
+
+##### Cari tau pengaruh People.practicing.open.defecation pada uji parsial
+
+Tolak Ho jika p-value \< alpha(0.05)
+
+karena 2e-16 \< 0.05
+
+Maka, Ho ditolak
+
+Jadi variabel People.practicing.open.defecation berpengaruh terhadap life expectancy
+
+### 2. Asumsi dari model terpenuhi
+
+```{r}
+library(car)
+library(lmtest)
+```
+
+#### a. Tidak boleh ada multikolinieritas
+
+Hanya terdapat 1 variabel pada m1 sehingga tidak perlu uji multikolinearitas
+
+#### b. Residual IIDN (Independent, Identik, Distribusi Normal)
+
+```{r}
+e1 = residuals(model)
+```
+
+##### Asumsi independent menggunakan Durbin Watson test
+
+```{r}
+dwtest(model, alternative = "two.sided")
+
+```
+
+Tolak Ho jika p-value \< alpha(0.05)
+
+Maka H0 ditolak, terima H1
+
+H0: (rho=0) residual independent/tdk ada autokorelasi pada residual
+
+H1: (rho!=0) residual dependent/ada autokorelasi pada residual
+
+Asumsi residual independent tidak terpenuhi
+
+##### Asumsi identik menggunakan BP test
+
+```{r}
+bptest(model)
+```
+
+Tolak Ho jika p-value \< alpha(0.05)
+
+Maka H0 ditolak, terima H1
+
+H0: (varians = sama) residual identik/homoskedastisitas
+
+h1: (varians != sama) residual tidak identik/heteroskedastisitas
+
+Asumsi residual identik/homoskedastisitas tidak terpenuhi
+
+##### Asumsi residual berdistribusi normal
+
+```{r}
+shapiro.test(e1)
+```
+
+Tolak Ho jika p-value \< alpha(0.05)
+
+Maka H0 ditolak, terima H1
+
+H0: residual berdistribusi normal
+
+H1: residual tidak berdistribusi normal
+
+Asumsi residual distribusi normal tidak terpenuhi
+
+#### Jadi, model m1 tidak bagus
+
+## Model 2: Life.Expectancy\~Individuals.using.the.Internet
+
+```{r}
+model = m2
+summary(model)
+```
+
+### 1. Semua parameter signifikan
+
+#### uji serentak (f test)
+
+H0: semua parameter tidak berpengaruh terhadap model
+
+H1: minimal ada satu parameter yang berpengaruh terhadap model
+
+Karena p-value \< alpha(0.05)
+
+Maka, H0 ditolak
+
+Jadi, minimal ada satu parameter yang berpengaruh terhadap model.
+
+Untuk mencari parameter mana yang berpengaruh / signifikan terhadap model, kita perlu mengujinya dengan uji parsial.
+
+#### uji parsial (t test)
+
+H0: parameter tersebut tidak berpengaruh terhadap model
+
+H1: parameter tersebut berpengaruh terhadap model
+
+##### Cari tau pengaruh intercept pada uji parsial
+
+Tolak Ho jika p-value \< alpha(0.05)
+
+karena 2e-16 \< 0.05
+
+Maka, Ho ditolak
+
+Jadi intercept berpengaruh dalam model
+
+##### Cari tau pengaruh Individuals.using.the.Internet pada uji parsial
+
+Tolak Ho jika p-value \< alpha(0.05)
+
+karena 2e-16 \< 0.05
+
+Maka, Ho ditolak
+
+Jadi variabel Individuals.using.the.Internet berpengaruh terhadap life expectancy
+
+### 2. Asumsi dari model terpenuhi
+
+#### a. Tidak boleh ada multikolinieritas
+
+Hanya terdapat 1 variabel pada m1 sehingga tidak perlu uji multikolinearitas
+
+#### b. Residual IIDN (Independent, Identik, Distribusi Normal)
+
+```{r}
+e2 = residuals(model)
+```
+
+##### Asumsi independent menggunakan Durbin Watson test
+
+```{r}
+dwtest(model, alternative = "two.sided")
+
+```
+
+Tolak Ho jika p-value \< alpha(0.05)
+
+Maka H0 ditolak, terima H1
+
+H0: (rho=0) residual independent/tdk ada autokorelasi pada residual
+
+H1: (rho!=0) residual dependent/ada autokorelasi pada residual
+
+Asumsi residual independent tidak terpenuhi
+
+##### Asumsi identik menggunakan BP test
+
+```{r}
+bptest(model)
+```
+
+Tolak Ho jika p-value \< alpha(0.05)
+
+Maka H0 ditolak, terima H1
+
+H0: (varians = sama) residual identik/homoskedastisitas
+
+h1: (varians != sama) residual tidak identik/heteroskedastisitas
+
+Asumsi residual identik/homoskedastisitas tidak terpenuhi
+
+##### Asumsi residual berdistribusi normal
+
+```{r}
+shapiro.test(e2)
+```
+
+Tolak Ho jika p-value \< alpha(0.05)
+
+Maka H0 ditolak, terima H1
+
+H0: residual berdistribusi normal
+
+H1: residual tidak berdistribusi normal
+
+Asumsi residual distribusi normal tidak terpenuhi
+
+#### Jadi, model m2 tidak bagus
+
+## Model 3: Life.Expectancy\~Obesity.among.adults
+
+```{r}
+model = m3
+summary(model)
+```
+
+### 1. Semua parameter signifikan
+
+#### uji serentak (f test)
+
+H0: semua parameter tidak berpengaruh terhadap model
+
+H1: minimal ada satu parameter yang berpengaruh terhadap model
+
+Karena p-value \< alpha(0.05)
+
+Maka, H0 ditolak
+
+Jadi, minimal ada satu parameter yang berpengaruh terhadap model.
+
+Untuk mencari parameter mana yang berpengaruh / signifikan terhadap model, kita perlu mengujinya dengan uji parsial.
+
+#### uji parsial (t test)
+
+H0: parameter tersebut tidak berpengaruh terhadap model
+
+H1: parameter tersebut berpengaruh terhadap model
+
+##### Cari tau pengaruh intercept pada uji parsial
+
+Tolak Ho jika p-value \< alpha(0.05)
+
+karena 2e-16 \< 0.05
+
+Maka, Ho ditolak
+
+Jadi intercept berpengaruh dalam model
+
+##### Cari tau pengaruh Obesity.among.adults pada uji parsial
+
+Tolak Ho jika p-value \< alpha(0.05)
+
+karena 2e-16 \< 0.05
+
+Maka, Ho ditolak
+
+Jadi variabel Obesity.among.adults berpengaruh terhadap life expectancy
+
+### 2. Asumsi dari model terpenuhi
+
+#### a. Tidak boleh ada multikolinieritas
+
+Hanya terdapat 1 variabel pada m1 sehingga tidak perlu uji multikolinearitas
+
+#### b. Residual IIDN (Independent, Identik, Distribusi Normal)
+
+```{r}
+e3 = residuals(model)
+```
+
+##### Asumsi independent menggunakan Durbin Watson test
+
+```{r}
+dwtest(model, alternative = "two.sided")
+
+```
+
+Tolak Ho jika p-value \< alpha(0.05)
+
+Maka H0 ditolak, terima H1
+
+H0: (rho=0) residual independent/tdk ada autokorelasi pada residual
+
+H1: (rho!=0) residual dependent/ada autokorelasi pada residual
+
+Asumsi residual independent tidak terpenuhi
+
+##### Asumsi identik menggunakan BP test
+
+```{r}
+bptest(model)
+```
+
+Tolak Ho jika p-value \< alpha(0.05)
+
+Maka H0 ditolak, terima H1
+
+H0: (varians = sama) residual identik/homoskedastisitas
+
+h1: (varians != sama) residual tidak identik/heteroskedastisitas
+
+Asumsi residual identik/homoskedastisitas tidak terpenuhi
+
+##### Asumsi residual berdistribusi normal
+
+```{r}
+shapiro.test(e3)
+```
+
+Tolak Ho jika p-value \< alpha(0.05)
+
+Maka H0 ditolak, terima H1
+
+H0: residual berdistribusi normal
+
+H1: residual tidak berdistribusi normal
+
+Asumsi residual distribusi normal tidak terpenuhi
+
+#### Jadi, model m3 tidak bagus
+
+## Model 4: Life.Expectancy\~People.using.at.least.basic.drinking.water.services
+
+```{r}
+model = m4
+summary(model)
+```
+
+### 1. Semua parameter signifikan
+
+#### uji serentak (f test)
+
+H0: semua parameter tidak berpengaruh terhadap model
+
+H1: minimal ada satu parameter yang berpengaruh terhadap model
+
+Karena p-value \< alpha(0.05)
+
+Maka, H0 ditolak
+
+Jadi, minimal ada satu parameter yang berpengaruh terhadap model.
+
+Untuk mencari parameter mana yang berpengaruh / signifikan terhadap model, kita perlu mengujinya dengan uji parsial.
+
+#### uji parsial (t test)
+
+H0: parameter tersebut tidak berpengaruh terhadap model
+
+H1: parameter tersebut berpengaruh terhadap model
+
+##### Cari tau pengaruh intercept pada uji parsial
+
+Tolak Ho jika p-value \< alpha(0.05)
+
+karena 2e-16 \< 0.05
+
+Maka, Ho ditolak
+
+Jadi intercept berpengaruh dalam model
+
+##### Cari tau pengaruh People.using.at.least.basic.drinking.water.services pada uji parsial
+
+Tolak Ho jika p-value \< alpha(0.05)
+
+karena 2e-16 \< 0.05
+
+Maka, Ho ditolak
+
+Jadi variabel People.using.at.least.basic.drinking.water.services berpengaruh terhadap life expectancy
+
+### 2. Asumsi dari model terpenuhi
+
+#### a. Tidak boleh ada multikolinieritas
+
+Hanya terdapat 1 variabel pada m1 sehingga tidak perlu uji multikolinearitas
+
+#### b. Residual IIDN (Independent, Identik, Distribusi Normal)
+
+```{r}
+e4 = residuals(model)
+```
+
+##### Asumsi independent menggunakan Durbin Watson test
+
+```{r}
+dwtest(model, alternative = "two.sided")
+
+```
+
+Tolak Ho jika p-value \< alpha(0.05)
+
+Maka H0 ditolak, terima H1
+
+H0: (rho=0) residual independent/tdk ada autokorelasi pada residual
+
+H1: (rho!=0) residual dependent/ada autokorelasi pada residual
+
+Asumsi residual independent tidak terpenuhi
+
+##### Asumsi identik menggunakan BP test
+
+```{r}
+bptest(model)
+```
+
+Tolak Ho jika p-value \< alpha(0.05)
+
+Maka H0 ditolak, terima H1
+
+H0: (varians = sama) residual identik/homoskedastisitas
+
+h1: (varians != sama) residual tidak identik/heteroskedastisitas
+
+Asumsi residual identik/homoskedastisitas tidak terpenuhi
+
+##### Asumsi residual berdistribusi normal
+
+```{r}
+shapiro.test(e4)
+```
+
+Tolak Ho jika p-value \< alpha(0.05)
+
+Maka H0 ditolak, terima H1
+
+H0: residual berdistribusi normal
+
+H1: residual tidak berdistribusi normal
+
+Asumsi residual distribusi normal tidak terpenuhi
+
+#### Jadi, model m4 tidak bagus
+
+## Model 5: Life.Expectancy\~People.practicing.open.defecation+Individuals.using.the.Internet
+
+```{r}
+model = m5
+summary(model)
+```
+
+### 1. Semua parameter signifikan
+
+#### uji serentak (f test)
+
+H0: semua parameter tidak berpengaruh terhadap model
+
+H1: minimal ada satu parameter yang berpengaruh terhadap model
+
+Karena p-value \< alpha(0.05)
+
+Maka, H0 ditolak
+
+Jadi, minimal ada satu parameter yang berpengaruh terhadap model.
+
+Untuk mencari parameter mana yang berpengaruh / signifikan terhadap model, kita perlu mengujinya dengan uji parsial.
+
+#### uji parsial (t test)
+
+H0: parameter tersebut tidak berpengaruh terhadap model
+
+H1: parameter tersebut berpengaruh terhadap model
+
+##### Cari tau pengaruh intercept pada uji parsial
+
+Tolak Ho jika p-value \< alpha(0.05)
+
+karena 2e-16 \< 0.05
+
+Maka, Ho ditolak
+
+Jadi intercept berpengaruh dalam model
+
+##### Cari tau pengaruh People.practicing.open.defecation pada uji parsial
+
+Tolak Ho jika p-value \< alpha(0.05)
+
+karena 2e-16 \< 0.05
+
+Maka, Ho ditolak
+
+Jadi variabel People.practicing.open.defecation berpengaruh terhadap life expectancy
+
+##### Cari tau pengaruh Individuals.using.the.Internet pada uji parsial
+
+Tolak Ho jika p-value \< alpha(0.05)
+
+karena 2e-16 \< 0.05
+
+Maka, Ho ditolak
+
+Jadi variabel Individuals.using.the.Internet berpengaruh terhadap life expectancy
+
+### 2. Asumsi dari model terpenuhi
+
+#### a. Tidak boleh ada multikolinieritas
+
+```{r}
+vif(m5)
+```
+
+Karena nilai VIF!\>10, maka tidak terjadi multikolinieritas
+
+#### b. Residual IIDN (Independent, Identik, Distribusi Normal)
+
+```{r}
+e5 = residuals(model)
+```
+
+##### Asumsi independent menggunakan Durbin Watson test
+
+```{r}
+dwtest(model, alternative = "two.sided")
+
+```
+
+Tolak Ho jika p-value \< alpha(0.05)
+
+Maka H0 ditolak, terima H1
+
+H0: (rho=0) residual independent/tdk ada autokorelasi pada residual
+
+H1: (rho!=0) residual dependent/ada autokorelasi pada residual
+
+Asumsi residual independent tidak terpenuhi
+
+##### Asumsi identik menggunakan BP test
+
+```{r}
+bptest(model)
+```
+
+Tolak Ho jika p-value \< alpha(0.05)
+
+Maka H0 ditolak, terima H1
+
+H0: (varians = sama) residual identik/homoskedastisitas
+
+h1: (varians != sama) residual tidak identik/heteroskedastisitas
+
+Asumsi residual identik/homoskedastisitas tidak terpenuhi
+
+##### Asumsi residual berdistribusi normal
+
+```{r}
+shapiro.test(e5)
+```
+
+Tolak Ho jika p-value \< alpha(0.05)
+
+Maka H0 ditolak, terima H1
+
+H0: residual berdistribusi normal
+
+H1: residual tidak berdistribusi normal
+
+Asumsi residual distribusi normal tidak terpenuhi
+
+#### Jadi, model m5 tidak bagus
+
+## Model 6: Life.Expectancy\~People.practicing.open.defecation+Obesity.among.adults
+
+```{r}
+model = m6
+summary(model)
+```
+
+### 1. Semua parameter signifikan
+
+#### uji serentak (f test)
+
+H0: semua parameter tidak berpengaruh terhadap model
+
+H1: minimal ada satu parameter yang berpengaruh terhadap model
+
+Karena p-value \< alpha(0.05)
+
+Maka, H0 ditolak
+
+Jadi, minimal ada satu parameter yang berpengaruh terhadap model.
+
+Untuk mencari parameter mana yang berpengaruh / signifikan terhadap model, kita perlu mengujinya dengan uji parsial.
+
+#### uji parsial (t test)
+
+H0: parameter tersebut tidak berpengaruh terhadap model
+
+H1: parameter tersebut berpengaruh terhadap model
+
+##### Cari tau pengaruh intercept pada uji parsial
+
+Tolak Ho jika p-value \< alpha(0.05)
+
+karena 2e-16 \< 0.05
+
+Maka, Ho ditolak
+
+Jadi intercept berpengaruh dalam model
+
+##### Cari tau pengaruh People.practicing.open.defecation pada uji parsial
+
+Tolak Ho jika p-value \< alpha(0.05)
+
+karena 2e-16 \< 0.05
+
+Maka, Ho ditolak
+
+Jadi variabel People.practicing.open.defecation berpengaruh terhadap life expectancy
+
+##### Cari tau pengaruh Obesity.among.adults pada uji parsial
+
+Tolak Ho jika p-value \< alpha(0.05)
+
+karena 2e-16 \< 0.05
+
+Maka, Ho ditolak
+
+Jadi variabel Obesity.among.adults berpengaruh terhadap life expectancy
+
+### 2. Asumsi dari model terpenuhi
+
+#### a. Tidak boleh ada multikolinieritas
+
+```{r}
+vif(model)
+```
+
+Karena nilai VIF!\>10, maka tidak terjadi multikolinieritas
+
+#### b. Residual IIDN (Independent, Identik, Distribusi Normal)
+
+```{r}
+e6 = residuals(model)
+```
+
+##### Asumsi independent menggunakan Durbin Watson test
+
+```{r}
+dwtest(model, alternative = "two.sided")
+
+```
+
+Tolak Ho jika p-value \< alpha(0.05)
+
+Maka H0 ditolak, terima H1
+
+H0: (rho=0) residual independent/tdk ada autokorelasi pada residual
+
+H1: (rho!=0) residual dependent/ada autokorelasi pada residual
+
+Asumsi residual independent tidak terpenuhi
+
+##### Asumsi identik menggunakan BP test
+
+```{r}
+bptest(model)
+```
+
+Tolak Ho jika p-value \< alpha(0.05)
+
+Maka H0 ditolak, terima H1
+
+H0: (varians = sama) residual identik/homoskedastisitas
+
+h1: (varians != sama) residual tidak identik/heteroskedastisitas
+
+Asumsi residual identik/homoskedastisitas tidak terpenuhi
+
+##### Asumsi residual berdistribusi normal
+
+```{r}
+shapiro.test(e6)
+```
+
+Tolak Ho jika p-value \< alpha(0.05)
+
+Maka H0 ditolak, terima H1
+
+H0: residual berdistribusi normal
+
+H1: residual tidak berdistribusi normal
+
+Asumsi residual distribusi normal tidak terpenuhi
+
+#### Jadi, model m6 tidak bagus
+
+## Model 7: Life.Expectancy\~People.practicing.open.defecation+People.using.at.least.basic.drinking.water.services
+
+```{r}
+model = m7
+summary(model)
+```
+
+### 1. Semua parameter signifikan
+
+#### uji serentak (f test)
+
+H0: semua parameter tidak berpengaruh terhadap model
+
+H1: minimal ada satu parameter yang berpengaruh terhadap model
+
+Karena p-value \< alpha(0.05)
+
+Maka, H0 ditolak
+
+Jadi, minimal ada satu parameter yang berpengaruh terhadap model.
+
+Untuk mencari parameter mana yang berpengaruh / signifikan terhadap model, kita perlu mengujinya dengan uji parsial.
+
+#### uji parsial (t test)
+
+H0: parameter tersebut tidak berpengaruh terhadap model
+
+H1: parameter tersebut berpengaruh terhadap model
+
+##### Cari tau pengaruh intercept pada uji parsial
+
+Tolak Ho jika p-value \< alpha(0.05)
+
+karena 2e-16 \< 0.05
+
+Maka, Ho ditolak
+
+Jadi intercept berpengaruh dalam model
+
+##### Cari tau pengaruh People.practicing.open.defecation pada uji parsial
+
+Tolak Ho jika p-value \< alpha(0.05)
+
+karena 4.44e-15 \< 0.05
+
+Maka, Ho ditolak
+
+Jadi variabel People.practicing.open.defecation berpengaruh terhadap life expectancy
+
+##### Cari tau pengaruh People.using.at.least.basic.drinking.water.services pada uji parsial
+
+Tolak Ho jika p-value \< alpha(0.05)
+
+karena 2e-16 \< 0.05
+
+Maka, Ho ditolak
+
+Jadi variabel People.using.at.least.basic.drinking.water.services berpengaruh terhadap life expectancy
+
+### 2. Asumsi dari model terpenuhi
+
+#### a. Tidak boleh ada multikolinieritas
+
+```{r}
+vif(model)
+```
+
+Karena nilai VIF!\>10, maka tidak terjadi multikolinieritas
+
+#### b. Residual IIDN (Independent, Identik, Distribusi Normal)
+
+```{r}
+e7 = residuals(model)
+```
+
+##### Asumsi independent menggunakan Durbin Watson test
+
+```{r}
+dwtest(model, alternative = "two.sided")
+
+```
+
+Tolak Ho jika p-value \< alpha(0.05)
+
+Maka H0 ditolak, terima H1
+
+H0: (rho=0) residual independent/tdk ada autokorelasi pada residual
+
+H1: (rho!=0) residual dependent/ada autokorelasi pada residual
+
+Asumsi residual independent tidak terpenuhi
+
+##### Asumsi identik menggunakan BP test
+
+```{r}
+bptest(model)
+```
+
+Tolak Ho jika p-value \< alpha(0.05)
+
+Maka H0 ditolak, terima H1
+
+H0: (varians = sama) residual identik/homoskedastisitas
+
+h1: (varians != sama) residual tidak identik/heteroskedastisitas
+
+Asumsi residual identik/homoskedastisitas tidak terpenuhi
+
+##### Asumsi residual berdistribusi normal
+
+```{r}
+shapiro.test(e7)
+```
+
+Tolak Ho jika p-value \< alpha(0.05)
+
+Maka H0 ditolak, terima H1
+
+H0: residual berdistribusi normal
+
+H1: residual tidak berdistribusi normal
+
+Asumsi residual distribusi normal tidak terpenuhi
+
+#### Jadi, model m7 tidak bagus
+
+## Model 8: Life.Expectancy\~Individuals.using.the.Internet+Obesity.among.adults
+
+```{r}
+model = m8
+summary(model)
+```
+
+### 1. Semua parameter signifikan
+
+#### uji serentak (f test)
+
+H0: semua parameter tidak berpengaruh terhadap model
+
+H1: minimal ada satu parameter yang berpengaruh terhadap model
+
+Karena p-value \< alpha(0.05)
+
+Maka, H0 ditolak
+
+Jadi, minimal ada satu parameter yang berpengaruh terhadap model.
+
+Untuk mencari parameter mana yang berpengaruh / signifikan terhadap model, kita perlu mengujinya dengan uji parsial.
+
+#### uji parsial (t test)
+
+H0: parameter tersebut tidak berpengaruh terhadap model
+
+H1: parameter tersebut berpengaruh terhadap model
+
+##### Cari tau pengaruh intercept pada uji parsial
+
+Tolak Ho jika p-value \< alpha(0.05)
+
+karena 2e-16 \< 0.05
+
+Maka, Ho ditolak
+
+Jadi intercept berpengaruh dalam model
+
+##### Cari tau pengaruh Individuals.using.the.Internet pada uji parsial
+
+Tolak Ho jika p-value \< alpha(0.05)
+
+karena 2e-16 \< 0.05
+
+Maka, Ho ditolak
+
+Jadi variabel Individuals.using.the.Internet berpengaruh terhadap life expectancy
+
+##### Cari tau pengaruh Obesity.among.adults pada uji parsial
+
+Tolak Ho jika p-value \< alpha(0.05)
+
+karena 2e-16 \< 0.05
+
+Maka, Ho ditolak
+
+Jadi variabel Obesity.among.adults berpengaruh terhadap life expectancy
+
+### 2. Asumsi dari model terpenuhi
+
+#### a. Tidak boleh ada multikolinieritas
+
+```{r}
+vif(model)
+```
+
+Karena nilai VIF!\>10, maka tidak terjadi multikolinieritas
+
+#### b. Residual IIDN (Independent, Identik, Distribusi Normal)
+
+```{r}
+e8 = residuals(model)
+```
+
+##### Asumsi independent menggunakan Durbin Watson test
+
+```{r}
+dwtest(model, alternative = "two.sided")
+
+```
+
+Tolak Ho jika p-value \< alpha(0.05)
+
+Maka H0 ditolak, terima H1
+
+H0: (rho=0) residual independent/tdk ada autokorelasi pada residual
+
+H1: (rho!=0) residual dependent/ada autokorelasi pada residual
+
+Asumsi residual independent tidak terpenuhi
+
+##### Asumsi identik menggunakan BP test
+
+```{r}
+bptest(model)
+```
+
+Tolak Ho jika p-value \< alpha(0.05)
+
+Maka H0 ditolak, terima H1
+
+H0: (varians = sama) residual identik/homoskedastisitas
+
+h1: (varians != sama) residual tidak identik/heteroskedastisitas
+
+Asumsi residual identik/homoskedastisitas tidak terpenuhi
+
+##### Asumsi residual berdistribusi normal
+
+```{r}
+shapiro.test(e8)
+```
+
+Tolak Ho jika p-value \< alpha(0.05)
+
+Maka H0 ditolak, terima H1
+
+H0: residual berdistribusi normal
+
+H1: residual tidak berdistribusi normal
+
+Asumsi residual distribusi normal tidak terpenuhi
+
+#### Jadi, model m8 tidak bagus
+
+## Model 9: Life.Expectancy\~Individuals.using.the.Internet+People.using.at.least.basic.drinking.water.services
+
+```{r}
+model = m9
+summary(model)
+```
+
+### 1. Semua parameter signifikan
+
+#### uji serentak (f test)
+
+H0: semua parameter tidak berpengaruh terhadap model
+
+H1: minimal ada satu parameter yang berpengaruh terhadap model
+
+Karena p-value \< alpha(0.05)
+
+Maka, H0 ditolak
+
+Jadi, minimal ada satu parameter yang berpengaruh terhadap model.
+
+Untuk mencari parameter mana yang berpengaruh / signifikan terhadap model, kita perlu mengujinya dengan uji parsial.
+
+#### uji parsial (t test)
+
+H0: parameter tersebut tidak berpengaruh terhadap model
+
+H1: parameter tersebut berpengaruh terhadap model
+
+##### Cari tau pengaruh intercept pada uji parsial
+
+Tolak Ho jika p-value \< alpha(0.05)
+
+karena 2e-16 \< 0.05
+
+Maka, Ho ditolak
+
+Jadi intercept berpengaruh dalam model
+
+##### Cari tau pengaruh Individuals.using.the.Internet pada uji parsial
+
+Tolak Ho jika p-value \< alpha(0.05)
+
+karena 2e-16 \< 0.05
+
+Maka, Ho ditolak
+
+Jadi variabel Individuals.using.the.Internet berpengaruh terhadap life expectancy
+
+##### Cari tau pengaruh People.using.at.least.basic.drinking.water.services pada uji parsial
+
+Tolak Ho jika p-value \< alpha(0.05)
+
+karena 2e-16 \< 0.05
+
+Maka, Ho ditolak
+
+Jadi variabel People.using.at.least.basic.drinking.water.services berpengaruh terhadap life expectancy
+
+### 2. Asumsi dari model terpenuhi
+
+#### a. Tidak boleh ada multikolinieritas
+
+```{r}
+vif(model)
+```
+
+Karena nilai VIF!\>10, maka tidak terjadi multikolinieritas
+
+#### b. Residual IIDN (Independent, Identik, Distribusi Normal)
+
+```{r}
+e9 = residuals(model)
+```
+
+##### Asumsi independent menggunakan Durbin Watson test
+
+```{r}
+dwtest(model, alternative = "two.sided")
+
+```
+
+Tolak Ho jika p-value \< alpha(0.05)
+
+Maka H0 ditolak, terima H1
+
+H0: (rho=0) residual independent/tdk ada autokorelasi pada residual
+
+H1: (rho!=0) residual dependent/ada autokorelasi pada residual
+
+Asumsi residual independent tidak terpenuhi
+
+##### Asumsi identik menggunakan BP test
+
+```{r}
+bptest(model)
+```
+
+Tolak Ho jika p-value \< alpha(0.05)
+
+Maka H0 ditolak, terima H1
+
+H0: (varians = sama) residual identik/homoskedastisitas
+
+h1: (varians != sama) residual tidak identik/heteroskedastisitas
+
+Asumsi residual identik/homoskedastisitas tidak terpenuhi
+
+##### Asumsi residual berdistribusi normal
+
+```{r}
+shapiro.test(e9)
+```
+
+Tolak Ho jika p-value \< alpha(0.05)
+
+Maka H0 ditolak, terima H1
+
+H0: residual berdistribusi normal
+
+H1: residual tidak berdistribusi normal
+
+Asumsi residual distribusi normal tidak terpenuhi
+
+#### Jadi, model m9 tidak bagus
+
+## Model 10: Life.Expectancy\~Obesity.among.adults+People.using.at.least.basic.drinking.water.services
+
+```{r}
+model = m10
+summary(model)
+```
+
+### 1. Semua parameter signifikan
+
+#### uji serentak (f test)
+
+H0: semua parameter tidak berpengaruh terhadap model
+
+H1: minimal ada satu parameter yang berpengaruh terhadap model
+
+Karena p-value \< alpha(0.05)
+
+Maka, H0 ditolak
+
+Jadi, minimal ada satu parameter yang berpengaruh terhadap model.
+
+Untuk mencari parameter mana yang berpengaruh / signifikan terhadap model, kita perlu mengujinya dengan uji parsial.
+
+#### uji parsial (t test)
+
+H0: parameter tersebut tidak berpengaruh terhadap model
+
+H1: parameter tersebut berpengaruh terhadap model
+
+##### Cari tau pengaruh intercept pada uji parsial
+
+Tolak Ho jika p-value \< alpha(0.05)
+
+karena 2e-16 \< 0.05
+
+Maka, Ho ditolak
+
+Jadi intercept berpengaruh dalam model
+
+##### Cari tau pengaruh Obesity.among.adults pada uji parsial
+
+Tolak Ho jika p-value \< alpha(0.05)
+
+karena 2e-16 \< 0.05
+
+Maka, Ho ditolak
+
+Jadi variabel Obesity.among.adults berpengaruh terhadap life expectancy
+
+##### Cari tau pengaruh People.using.at.least.basic.drinking.water.services pada uji parsial
+
+Tolak Ho jika p-value \< alpha(0.05)
+
+karena 2e-16 \< 0.05
+
+Maka, Ho ditolak
+
+Jadi variabel People.using.at.least.basic.drinking.water.services berpengaruh terhadap life expectancy
+
+### 2. Asumsi dari model terpenuhi
+
+#### a. Tidak boleh ada multikolinieritas
+
+```{r}
+vif(model)
+```
+
+Karena nilai VIF!\>10, maka tidak terjadi multikolinieritas
+
+#### b. Residual IIDN (Independent, Identik, Distribusi Normal)
+
+```{r}
+e10 = residuals(model)
+```
+
+##### Asumsi independent menggunakan Durbin Watson test
+
+```{r}
+dwtest(model, alternative = "two.sided")
+
+```
+
+Tolak Ho jika p-value \< alpha(0.05)
+
+Maka H0 ditolak, terima H1
+
+H0: (rho=0) residual independent/tdk ada autokorelasi pada residual
+
+H1: (rho!=0) residual dependent/ada autokorelasi pada residual
+
+Asumsi residual independent tidak terpenuhi
+
+##### Asumsi identik menggunakan BP test
+
+```{r}
+bptest(model)
+```
+
+Tolak Ho jika p-value \< alpha(0.05)
+
+Maka H0 ditolak, terima H1
+
+H0: (varians = sama) residual identik/homoskedastisitas
+
+h1: (varians != sama) residual tidak identik/heteroskedastisitas
+
+Asumsi residual identik/homoskedastisitas tidak terpenuhi
+
+##### Asumsi residual berdistribusi normal
+
+```{r}
+shapiro.test(e10)
+```
+
+Tolak Ho jika p-value \< alpha(0.05)
+
+Maka H0 ditolak, terima H1
+
+H0: residual berdistribusi normal
+
+H1: residual tidak berdistribusi normal
+
+Asumsi residual distribusi normal tidak terpenuhi
+
+#### Jadi, model m10 tidak bagus
+
+## Model 11: Life.Expectancy\~People.practicing.open.defecation+Individuals.using.the.Internet+Obesity.among.adults
+
+```{r}
+model = m11
+summary(model)
+```
+
+### 1. Semua parameter signifikan
+
+#### uji serentak (f test)
+
+H0: semua parameter tidak berpengaruh terhadap model
+
+H1: minimal ada satu parameter yang berpengaruh terhadap model
+
+Karena p-value \< alpha(0.05)
+
+Maka, H0 ditolak
+
+Jadi, minimal ada satu parameter yang berpengaruh terhadap model.
+
+Untuk mencari parameter mana yang berpengaruh / signifikan terhadap model, kita perlu mengujinya dengan uji parsial.
+
+#### uji parsial (t test)
+
+H0: parameter tersebut tidak berpengaruh terhadap model
+
+H1: parameter tersebut berpengaruh terhadap model
+
+##### Cari tau pengaruh intercept pada uji parsial
+
+Tolak Ho jika p-value \< alpha(0.05)
+
+karena 2e-16 \< 0.05
+
+Maka, Ho ditolak
+
+Jadi intercept berpengaruh dalam model
+
+##### Cari tau pengaruh People.practicing.open.defecation pada uji parsial
+
+Tolak Ho jika p-value \< alpha(0.05)
+
+karena 2e-16 \< 0.05
+
+Maka, Ho ditolak
+
+Jadi variabel People.practicing.open.defecation berpengaruh terhadap life expectancy
+
+##### Cari tau pengaruh Individuals.using.the.Internet pada uji parsial
+
+Tolak Ho jika p-value \< alpha(0.05)
+
+karena 2e-16 \< 0.05
+
+Maka, Ho ditolak
+
+Jadi variabel Individuals.using.the.Internet berpengaruh terhadap life expectancy
+
+##### Cari tau pengaruh Obesity.among.adults pada uji parsial
+
+Tolak Ho jika p-value \< alpha(0.05)
+
+karena 2e-16 \< 0.05
+
+Maka, Ho ditolak
+
+Jadi variabel Obesity.among.adults berpengaruh terhadap life expectancy
+
+### 2. Asumsi dari model terpenuhi
+
+#### a. Tidak boleh ada multikolinieritas
+
+```{r}
+vif(model)
+```
+
+Karena nilai VIF!\>10, maka tidak terjadi multikolinieritas
+
+#### b. Residual IIDN (Independent, Identik, Distribusi Normal)
+
+```{r}
+e11 = residuals(model)
+```
+
+##### Asumsi independent menggunakan Durbin Watson test
+
+```{r}
+dwtest(model, alternative = "two.sided")
+
+```
+
+Tolak Ho jika p-value \< alpha(0.05)
+
+Maka H0 ditolak, terima H1
+
+H0: (rho=0) residual independent/tdk ada autokorelasi pada residual
+
+H1: (rho!=0) residual dependent/ada autokorelasi pada residual
+
+Asumsi residual independent tidak terpenuhi
+
+##### Asumsi identik menggunakan BP test
+
+```{r}
+bptest(model)
+```
+
+Tolak Ho jika p-value \< alpha(0.05)
+
+Maka H0 ditolak, terima H1
+
+H0: (varians = sama) residual identik/homoskedastisitas
+
+h1: (varians != sama) residual tidak identik/heteroskedastisitas
+
+Asumsi residual identik/homoskedastisitas tidak terpenuhi
+
+##### Asumsi residual berdistribusi normal
+
+```{r}
+shapiro.test(e11)
+```
+
+Tolak Ho jika p-value \< alpha(0.05)
+
+Maka H0 ditolak, terima H1
+
+H0: residual berdistribusi normal
+
+H1: residual tidak berdistribusi normal
+
+Asumsi residual distribusi normal tidak terpenuhi
+
+#### Jadi, model m11 tidak bagus
+
+## Model 12: Life.Expectancy\~People.practicing.open.defecation+Individuals.using.the.Internet+People.using.at.least.basic.drinking.water.services
+
+```{r}
+model = m12
+summary(model)
+```
+
+### 1. Semua parameter signifikan
+
+#### uji serentak (f test)
+
+H0: semua parameter tidak berpengaruh terhadap model
+
+H1: minimal ada satu parameter yang berpengaruh terhadap model
+
+Karena p-value \< alpha(0.05)
+
+Maka, H0 ditolak
+
+Jadi, minimal ada satu parameter yang berpengaruh terhadap model.
+
+Untuk mencari parameter mana yang berpengaruh / signifikan terhadap model, kita perlu mengujinya dengan uji parsial.
+
+#### uji parsial (t test)
+
+H0: parameter tersebut tidak berpengaruh terhadap model
+
+H1: parameter tersebut berpengaruh terhadap model
+
+##### Cari tau pengaruh intercept pada uji parsial
+
+Tolak Ho jika p-value \< alpha(0.05)
+
+karena 2e-16 \< 0.05
+
+Maka, Ho ditolak
+
+Jadi intercept berpengaruh dalam model
+
+##### Cari tau pengaruh People.practicing.open.defecation pada uji parsial
+
+Tolak Ho jika p-value \< alpha(0.05)
+
+karena 1.93e-11 \< 0.05
+
+Maka, Ho ditolak
+
+Jadi variabel People.practicing.open.defecation berpengaruh terhadap life expectancy
+
+##### Cari tau pengaruh Individuals.using.the.Internet pada uji parsial
+
+Tolak Ho jika p-value \< alpha(0.05)
+
+karena 2e-16 \< 0.05
+
+Maka, Ho ditolak
+
+Jadi variabel Individuals.using.the.Internet berpengaruh terhadap life expectancy
+
+##### Cari tau pengaruh People.using.at.least.basic.drinking.water.services pada uji parsial
+
+Tolak Ho jika p-value \< alpha(0.05)
+
+karena 2e-16 \< 0.05
+
+Maka, Ho ditolak
+
+Jadi variabel People.using.at.least.basic.drinking.water.services berpengaruh terhadap life expectancy
+
+### 2. Asumsi dari model terpenuhi
+
+#### a. Tidak boleh ada multikolinieritas
+
+```{r}
+vif(model)
+```
+
+Karena nilai VIF!\>10, maka tidak terjadi multikolinieritas
+
+#### b. Residual IIDN (Independent, Identik, Distribusi Normal)
+
+```{r}
+e12 = residuals(model)
+```
+
+##### Asumsi independent menggunakan Durbin Watson test
+
+```{r}
+dwtest(model, alternative = "two.sided")
+
+```
+
+Tolak Ho jika p-value \< alpha(0.05)
+
+Maka H0 ditolak, terima H1
+
+H0: (rho=0) residual independent/tdk ada autokorelasi pada residual
+
+H1: (rho!=0) residual dependent/ada autokorelasi pada residual
+
+Asumsi residual independent tidak terpenuhi
+
+##### Asumsi identik menggunakan BP test
+
+```{r}
+bptest(model)
+```
+
+Tolak Ho jika p-value \< alpha(0.05)
+
+Maka H0 ditolak, terima H1
+
+H0: (varians = sama) residual identik/homoskedastisitas
+
+h1: (varians != sama) residual tidak identik/heteroskedastisitas
+
+Asumsi residual identik/homoskedastisitas tidak terpenuhi
+
+##### Asumsi residual berdistribusi normal
+
+```{r}
+shapiro.test(e12)
+```
+
+Tolak Ho jika p-value \< alpha(0.05)
+
+Maka H0 ditolak, terima H1
+
+H0: residual berdistribusi normal
+
+H1: residual tidak berdistribusi normal
+
+Asumsi residual distribusi normal tidak terpenuhi
+
+#### Jadi, model m12 tidak bagus
+
+## Model 13: Life.Expectancy\~People.practicing.open.defecation+Obesity.among.adults+People.using.at.least.basic.drinking.water.services
+
+```{r}
+model = m13
+summary(model)
+```
+
+### 1. Semua parameter signifikan
+
+#### uji serentak (f test)
+
+H0: semua parameter tidak berpengaruh terhadap model
+
+H1: minimal ada satu parameter yang berpengaruh terhadap model
+
+Karena p-value \< alpha(0.05)
+
+Maka, H0 ditolak
+
+Jadi, minimal ada satu parameter yang berpengaruh terhadap model.
+
+Untuk mencari parameter mana yang berpengaruh / signifikan terhadap model, kita perlu mengujinya dengan uji parsial.
+
+#### uji parsial (t test)
+
+H0: parameter tersebut tidak berpengaruh terhadap model
+
+H1: parameter tersebut berpengaruh terhadap model
+
+##### Cari tau pengaruh intercept pada uji parsial
+
+Tolak Ho jika p-value \< alpha(0.05)
+
+karena 2e-16 \< 0.05
+
+Maka, Ho ditolak
+
+Jadi intercept berpengaruh dalam model
+
+##### Cari tau pengaruh People.practicing.open.defecation pada uji parsial
+
+Tolak Ho jika p-value \< alpha(0.05)
+
+karena 3.85e-08 \< 0.05
+
+Maka, Ho ditolak
+
+Jadi variabel People.practicing.open.defecation berpengaruh terhadap life expectancy
+
+##### Cari tau pengaruh Obesity.among.adults pada uji parsial
+
+Tolak Ho jika p-value \< alpha(0.05)
+
+karena 2e-16 \< 0.05
+
+Maka, Ho ditolak
+
+Jadi variabel Obesity.among.adults berpengaruh terhadap life expectancy
+
+##### Cari tau pengaruh People.using.at.least.basic.drinking.water.services pada uji parsial
+
+Tolak Ho jika p-value \< alpha(0.05)
+
+karena 2e-16 \< 0.05
+
+Maka, Ho ditolak
+
+Jadi variabel People.using.at.least.basic.drinking.water.services berpengaruh terhadap life expectancy
+
+### 2. Asumsi dari model terpenuhi
+
+#### a. Tidak boleh ada multikolinieritas
+
+```{r}
+vif(model)
+```
+
+Karena nilai VIF!\>10, maka tidak terjadi multikolinieritas
+
+#### b. Residual IIDN (Independent, Identik, Distribusi Normal)
+
+```{r}
+e13 = residuals(model)
+```
+
+##### Asumsi independent menggunakan Durbin Watson test
+
+```{r}
+dwtest(model, alternative = "two.sided")
+
+```
+
+Tolak Ho jika p-value \< alpha(0.05)
+
+Maka H0 ditolak, terima H1
+
+H0: (rho=0) residual independent/tdk ada autokorelasi pada residual
+
+H1: (rho!=0) residual dependent/ada autokorelasi pada residual
+
+Asumsi residual independent tidak terpenuhi
+
+##### Asumsi identik menggunakan BP test
+
+```{r}
+bptest(model)
+```
+
+Tolak Ho jika p-value \< alpha(0.05)
+
+Maka H0 ditolak, terima H1
+
+H0: (varians = sama) residual identik/homoskedastisitas
+
+h1: (varians != sama) residual tidak identik/heteroskedastisitas
+
+Asumsi residual identik/homoskedastisitas tidak terpenuhi
+
+##### Asumsi residual berdistribusi normal
+
+```{r}
+shapiro.test(e13)
+```
+
+Tolak Ho jika p-value \< alpha(0.05)
+
+Maka H0 ditolak, terima H1
+
+H0: residual berdistribusi normal
+
+H1: residual tidak berdistribusi normal
+
+Asumsi residual distribusi normal tidak terpenuhi
+
+#### Jadi, model m13 tidak bagus
+
+## Model 14: Life.Expectancy\~Individuals.using.the.Internet+Obesity.among.adults+People.using.at.least.basic.drinking.water.services
+
+```{r}
+model = m14
+summary(model)
+```
+
+### 1. Semua parameter signifikan
+
+#### uji serentak (f test)
+
+H0: semua parameter tidak berpengaruh terhadap model
+
+H1: minimal ada satu parameter yang berpengaruh terhadap model
+
+Karena p-value \< alpha(0.05)
+
+Maka, H0 ditolak
+
+Jadi, minimal ada satu parameter yang berpengaruh terhadap model.
+
+Untuk mencari parameter mana yang berpengaruh / signifikan terhadap model, kita perlu mengujinya dengan uji parsial.
+
+##### uji parsial (t test)
+
+H0: parameter tersebut tidak berpengaruh terhadap model
+
+H1: parameter tersebut berpengaruh terhadap model
+
+##### Cari tau pengaruh intercept pada uji parsial
+
+Tolak Ho jika p-value \< alpha(0.05)
+
+karena 2e-16 \< 0.05
+
+Maka, Ho ditolak
+
+Jadi intercept berpengaruh dalam model
+
+##### Cari tau pengaruh Individuals.using.the.Internet pada uji parsial
+
+Tolak Ho jika p-value \< alpha(0.05)
+
+karena 2e-16 \< 0.05
+
+Maka, Ho ditolak
+
+Jadi variabel Individuals.using.the.Internet berpengaruh terhadap life expectancy
+
+##### Cari tau pengaruh Obesity.among.adults pada uji parsial
+
+Tolak Ho jika p-value \< alpha(0.05)
+
+karena 0.00247 \< 0.05
+
+Maka, Ho ditolak
+
+Jadi variabel Obesity.among.adults berpengaruh terhadap life expectancy
+
+##### Cari tau pengaruh People.using.at.least.basic.drinking.water.services pada uji parsial
+
+Tolak Ho jika p-value \< alpha(0.05)
+
+karena 2e-16 \< 0.05
+
+Maka, Ho gagal ditolak
+
+Jadi variabel People.using.at.least.basic.drinking.water.services berpengaruh terhadap life expectancy
+
+### 2. Asumsi dari model terpenuhi
+
+#### a. Tidak boleh ada multikolinieritas
+
+```{r}
+vif(model)
+```
+
+Karena nilai VIF!\>10, maka tidak terjadi multikolinieritas
+
+#### b. Residual IIDN (Independent, Identik, Distribusi Normal)
+
+```{r}
+e14 = residuals(model)
+```
+
+##### Asumsi independent menggunakan Durbin Watson test
+
+```{r}
+dwtest(model, alternative = "two.sided")
+
+```
+
+Tolak Ho jika p-value \< alpha(0.05)
+
+Maka H0 ditolak, terima H1
+
+H0: (rho=0) residual independent/tdk ada autokorelasi pada residual
+
+H1: (rho!=0) residual dependent/ada autokorelasi pada residual
+
+Asumsi residual independent tidak terpenuhi
+
+##### Asumsi identik menggunakan BP test
+
+```{r}
+bptest(model)
+```
+
+Tolak Ho jika p-value \< alpha(0.05)
+
+Maka H0 ditolak, terima H1
+
+H0: (varians = sama) residual identik/homoskedastisitas
+
+h1: (varians != sama) residual tidak identik/heteroskedastisitas
+
+Asumsi residual identik/homoskedastisitas tidak terpenuhi
+
+##### Asumsi residual berdistribusi normal
+
+```{r}
+shapiro.test(e14)
+```
+
+Tolak Ho jika p-value \< alpha(0.05)
+
+Maka H0 ditolak, terima H1
+
+H0: residual berdistribusi normal
+
+H1: residual tidak berdistribusi normal
+
+Asumsi residual distribusi normal tidak terpenuhi
+
+#### Jadi, model m14 tidak bagus
+
+## Model 15: Life.Expectancy\~People.practicing.open.defecation+Individuals.using.the.Internet+Obesity.among.adults+People.using.at.least.basic.drinking.water.services
+
+```{r}
+model = m15
+summary(model)
+```
+
+### 1. Semua parameter signifikan
+
+#### uji serentak (f test)
+
+H0: semua parameter tidak berpengaruh terhadap model
+
+H1: minimal ada satu parameter yang berpengaruh terhadap model
+
+Karena p-value \< alpha(0.05)
+
+Maka, H0 ditolak
+
+Jadi, minimal ada satu parameter yang berpengaruh terhadap model.
+
+Untuk mencari parameter mana yang berpengaruh / signifikan terhadap model, kita perlu mengujinya dengan uji parsial.
+
+#### uji parsial (t test)
+
+H0: parameter tersebut tidak berpengaruh terhadap model
+
+H1: parameter tersebut berpengaruh terhadap model
+
+##### Cari tau pengaruh intercept pada uji parsial
+
+Tolak Ho jika p-value \< alpha(0.05)
+
+karena 2e-16 \< 0.05
+
+Maka, Ho ditolak
+
+Jadi intercept berpengaruh dalam model
+
+##### Cari tau pengaruh People.practicing.open.defecation pada uji parsial
+
+Tolak Ho jika p-value \< alpha(0.05)
+
+karena 2e-16 \< 0.05
+
+Maka, Ho ditolak
+
+Jadi variabel People.practicing.open.defecation berpengaruh terhadap life expectancy
+
+##### Cari tau pengaruh Individuals.using.the.Internet pada uji parsial
+
+Tolak Ho jika p-value \< alpha(0.05)
+
+karena 6.11e-10 \< 0.05
+
+Maka, Ho ditolak
+
+Jadi variabel Individuals.using.the.Internet berpengaruh terhadap life expectancy
+
+##### Cari tau pengaruh Obesity.among.adults pada uji parsial
+
+Tolak Ho jika p-value \< alpha(0.05)
+
+karena 0.12 !\< 0.05
+
+Maka, Ho gagal ditolak
+
+Jadi variabel Obesity.among.adults tidak berpengaruh terhadap life expectancy
+
+##### Cari tau pengaruh People.using.at.least.basic.drinking.water.services pada uji parsial
+
+Tolak Ho jika p-value \< alpha(0.05)
+
+karena 2e-16 \< 0.05
+
+Maka, Ho gagal ditolak
+
+Jadi variabel People.using.at.least.basic.drinking.water.services berpengaruh terhadap life expectancy
+
+#### Jadi, model m15 tidak bagus
